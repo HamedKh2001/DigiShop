@@ -1,0 +1,70 @@
+﻿@page
+@model CORETest.Pages.Auth.RegisterModel
+@{
+    Layout = "Shared/_AuthLayout";
+}
+<div method="post" class="main-content col-12 col-md-7 col-lg-5 mx-auto">
+    <div class="account-box">
+        <a href="/" class="logo">
+            <img src="/assets/img/logo.png" alt="">
+        </a>
+        <div class="account-box-title text-right">ثبت نام در دیجی کالا</div>
+        <div class="account-box-content">
+            <form method="post" class="form-account">
+                <div class="form-account-title">اطلاعات خود را وارد کنید</div>
+                <div class="form-account-row">
+                    <label class="input-label"><i class="fa fa-mobile-phone"></i></label>
+                    <input asp-for="PhoneNumber" class="input-field"
+                           placeholder=" شماره موبایل خود را وارد نمایید">
+                    <span asp-validation-for="PhoneNumber" style="color: red"></span>
+                </div>
+                <div class="form-account-row">
+                    <label class="input-label"><i class="fa fa-envelope"></i></label>
+                    <input asp-for="Email" class="input-field" 
+                           placeholder=" ایمیل خود را وارد نمایید">
+                    <span asp-validation-for="Email" style="color: red"></span>
+                </div><div class="form-account-row">
+                    <label class="input-label"><i class="now-ui-icons users_single-02"></i></label>
+                    <input asp-for="FullName" class="input-field" type="text"
+                           placeholder=" نام خود را وارد نمایید">
+                    <span asp-validation-for="FullName" style="color: red"></span>
+                </div>
+
+                <div class="form-account-row">
+                    <label class="input-label">
+                        <i class="now-ui-icons ui-1_lock-circle-open"></i>
+                    </label>
+                    <input asp-for="Password" class="input-field" type="password"
+                           placeholder="رمز عبور خود را وارد نمایید">
+                    <span asp-validation-for="Password" style="color: red"></span>
+                </div>
+                <div class="form-account-row">
+                    <label class="input-label">
+                        <i class="now-ui-icons ui-1_lock-circle-open"></i>
+                    </label>
+                    <input asp-for="RePassword" class="input-field" type="password"
+                           placeholder="تکرار رمز عبور">
+                    <span asp-validation-for="RePassword" style="color: red"></span>
+                </div>
+                <div class="form-account-row form-account-submit">
+                    <div class="parent-btn">
+                        <button type="submit" class="dk-btn dk-btn-info">
+                            ورود به دیجی کالا
+                            <i class="fa fa-sign-in"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-account-agree">
+                    <div class="g-recaptcha" data-sitekey="6Lf0KvkdAAAAAFtpIjMOTUUXXznahHIF1xEYK7OB"></div>
+                    <br />
+                </div>
+            </form>
+        </div>
+        <div class="account-box-footer">
+            <span>ثبلا ثبت نام کرده اید؟</span>
+            <a asp-page="Login" class="btn-link-border">
+                ورود به صفحه لاگین
+            </a>
+        </div>
+    </div>
+</div>

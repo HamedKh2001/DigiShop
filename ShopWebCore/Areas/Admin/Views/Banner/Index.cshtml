@@ -1,0 +1,54 @@
+﻿@model List<DataLayer.Entities.Event>
+@{
+    int index = 1;
+}
+<div class="box box-primary">
+    <div class="col col-md-12">
+        <h1>محصولات</h1>
+        <div style="text-align:center">
+            <a href="/admin/Banner/Create" class="btn btn-success btn-lg " style="width:40%"><i class="fa fa-plus">&nbsp;افزودن تبلیغ جدید</i></a>
+        </div>
+    </div>
+    <div class="box-body">
+        <table class="table table-bordered table-striped dataTable">
+            <thead>
+                <tr>
+                    <th class="sorting ">
+                        #
+                    </th>
+                    <th class="sorting col-md-2">
+                        تصویر
+                    </th>
+                    <th class="sorting col-md-2">
+                        نام تبلیغ
+                    </th>
+                    <th class="sorting" col-md-1>
+                        فعال
+                    </th>
+                    <th class="sorting" col-md-2>
+                        نوع تبلیغ
+                    </th>
+                    <th class="sorting col-md-4">
+                        عملیات
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@index</td>
+                        <td><img style="max-width:100%;max-height:70%;text-align:center" src="@CoreLayer.Utilities.FileRoots.ReadBannerRoot@item.BannerPhotos.PhotoName" alt="@item.ItemName" class="thumbnail" /></td>
+                       <td>@item.ItemName</td>
+                       <td>@item.IsDeleted</td>
+                       <td>@item.TypeOfAdvertise</td>
+                        <td>
+                            <a class="btn btn-warning" href="/admin/Banner/edit/@item.Id"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    index++;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

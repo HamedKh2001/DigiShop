@@ -1,0 +1,254 @@
+﻿@model CoreLayer.DTOs.ProductDto
+
+@{
+    ViewData["Title"] = "افـزودن پـسـت جـدیـد";
+    @using CoreLayer.Utilities;
+}
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-area="Admin" asp-controller="Products" asp-action="Create" enctype="multipart/form-data">
+                <ul class="timeline">
+                    <li>
+                        <i class="fa fa-user bg-aqua"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header no-border"><a href="#">@User.GetUserName()</a> درحال اضافه کردن محصول جدید هستید!!!</h3>
+                        </div>
+                    </li>
+
+                    <li>
+                        <i class="fa fa-envelope bg-blue"></i>
+
+                        <div class="timeline-item">
+
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">@ViewData["title"]</h3>
+                                </div>
+
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label asp-for="Groupid" class="control-label"></label>
+                                            <select asp-for="Groupid" class="form-control select2 select2-hidden-accessible" asp-items="ViewBag.Groupid"></select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label asp-for="ProductName" class="control-label"></label>
+                                            <input asp-for="ProductName" class="form-control" />
+                                            <span asp-validation-for="ProductName" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label asp-for="Price" class="control-label"></label>
+                                            <input asp-for="Price" class="form-control"/>
+                                            <span asp-validation-for="Price" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label asp-for="Description" class="control-label"></label>
+                                            <textarea asp-for="Description" id="Ckeditor" class="form-control"></textarea>
+                                            <span asp-validation-for="Description" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-9">
+                                            <label asp-for="ShortDescription" class="control-label"></label>
+                                            <div class="col col-md-11">
+                                                <textarea style="min-height:100px" asp-for="ShortDescription" class="form-control "></textarea>
+                                            </div>
+                                            <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <table class="table table-bordered table-dark">
+                                                <thead>
+                                                    <tr>
+                                                        <th asp-for="Color" class="control-label">رنگ</th>
+                                                        <th asp-for="Quantity" class="control-label">تعداد</th>
+                                                    </tr>
+                                                </thead>
+                                                
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input asp-for="ColorCode" type="color" class="form-group" title="انتخاب کنید"></td>
+                                                        <td><input asp-for="Quantity" type="number" class="form-group col-md-12"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td id="Colortd"></td>
+                                                        <td id="numbertd"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <a onclick="AddColorbtn()" class="label label-success"><i class="fa fa-plus"></i></a>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-2">
+                                            <label asp-for="Off" class="control-label"></label>
+                                            <input asp-for="Off" class="form-control" />
+                                            <span asp-validation-for="Off" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label asp-for="CompanyID" class="control-label"></label>
+                                            <select asp-for="CompanyID" class="form-control select2 select2-hidden-accessible" asp-items="ViewBag.CompanyId"></select>
+                                        </div>
+                                        <div class="form-group col-md-5">
+                                            <label asp-for="Slug" class="control-label"></label>
+                                            <input asp-for="Slug" class="form-control" />
+                                            <span asp-validation-for="Slug" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label asp-for="MetaTag" class="control-label"></label>
+                                            <input asp-for="MetaTag" class="form-control" />
+                                            <span asp-validation-for="MetaTag" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-md-7">
+                                            <label asp-for="MetaDescription" class="control-label"></label>
+                                            <input asp-for="MetaDescription" class="form-control" />
+                                            <span asp-validation-for="MetaDescription" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-md-1 form-check">
+                                            <label class="form-check-label">
+                                                <br />
+                                                <input class="form-check-input" asp-for="ShowInSlider" /> @Html.DisplayNameFor(model => model.ShowInSlider)
+                                            </label>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-camera bg-purple"></i>
+
+                        <div class="timeline-item">
+                            <div class="form-group ">
+                                <label asp-for="SliderPicture" for="exampleInputFile"></label>
+                                <div id="wrapper" style="margin-top: 20px;">
+                                    <input asp-for="SliderPicture" type="file" id="SliderPicture" name="SliderPicture" />
+                                    <div id="image-holder"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <i class="fa fa-camera bg-gray"></i>
+                        <div class="timeline-item">
+                            <div class="form-group ">
+                                <label asp-for="ProductPhotoFiles">تصاویر محصول</label>
+                                <div id="wrapper" style="margin-top: 20px;">
+                                    <input asp-for="ProductPhotoFiles" type="file" id="ProductPhotos" multiple />
+                                </div>
+                            </div>
+                            <div class="timeline-body ">
+                                <div id="multi-image-holder"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-item">
+                            <div style=" text-align: center" class="box-footer">
+                                <button type="submit" class="btn btn-success btn-lg" style="min-width:40%">ثــبــت</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-clock-o bg-gray"></i>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#SliderPicture").on('change', function () {
+                //Get count of selected files
+                var countFiles = $(this)[0].files.length;
+                var imgPath = $(this)[0].value;
+                var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+                var image_holder = $("#image-holder");
+                image_holder.empty();
+                if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                    if (typeof (FileReader) != "undefined") {
+                        //loop for each file selected for uploaded.
+                        for (var i = 0; i < countFiles; i++) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                $("<img />", {
+                                    "src": e.target.result,
+                                    "style": "max-width:40%",
+                                    "class": "margin"
+                                }).appendTo(image_holder);
+                            }
+                            image_holder.show();
+                            reader.readAsDataURL($(this)[0].files[i]);
+                        }
+                    } else {
+                        alert("This browser does not support FileReader.");
+                    }
+                } else {
+                    alert("Pls select only images");
+                }
+            });
+            $("#ProductPhotos").on('change', function () {
+                //Get count of selected files
+                var countFiles = $(this)[0].files.length;
+                var imgPath = $(this)[0].value;
+                var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+                var image_holder = $("#multi-image-holder");
+                image_holder.empty();
+                if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                    if (typeof (FileReader) != "undefined") {
+                        //loop for each file selected for uploaded.
+                        for (var i = 0; i < countFiles; i++) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                $("<img >", {
+                                    "src": e.target.result,
+                                    "style": "max-width:150px;max-height:100px",
+                                    "class": "margin"
+                                }).appendTo(image_holder);
+                            }
+                            image_holder.show();
+                            reader.readAsDataURL($(this)[0].files[i]);
+                        }
+                    } else {
+                        alert("This browser does not support FileReader.");
+                    }
+                } else {
+                    alert("Pls select only images");
+                }
+            });
+        });
+    </script>
+    <script>
+        function AddColorbtn(id) {
+            
+            $("<input>", {
+                "class": "form-group",
+                "name": "ColorCode",
+                "type": "color"
+            }).appendTo(Colortd);
+            $("<input>", {
+                "class": "form-group col-md-11",
+                "name": "Quantity",
+                "type": "number"
+            }).appendTo(numbertd)
+        };
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+});
+

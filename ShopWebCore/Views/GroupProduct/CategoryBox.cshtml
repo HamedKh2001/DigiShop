@@ -1,0 +1,19 @@
+﻿@model Task<IEnumerable<CoreLayer.DTOs.GroupProductDto>>
+@{
+    Layout = null;
+}
+<div class="box-content">
+    <div class="collapse show" id="collapseExample1">
+        <div class="filter-option">
+            @foreach (var group in Model.Result)
+            {
+                <div class="checkbox">
+                    @*<input id="checkbox2" type="checkbox">*@
+                    <a href="/GroupProduct/@group.Id/@group.Slug">
+                       @group.GroupName
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

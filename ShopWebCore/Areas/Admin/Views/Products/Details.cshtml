@@ -1,0 +1,174 @@
+﻿@model DataLayer.Entities.Product
+@{
+    ViewData["Title"] = "جزییات";
+    @using CoreLayer.Utilities
+}
+<section class="content">
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-area="Admin" asp-controller="Products" asp-action="Create" enctype="multipart/form-data">
+                <!-- The time line -->
+                <ul class="timeline">
+                    <li class="time-label">
+                        <span class="bg-green">
+                            @Model.CreationDate.ToShamsi()
+                        </span>
+                    </li>
+                    <!-- timeline item -->
+                    <li>
+                        <i class="fa fa-user bg-aqua"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header no-border"><a href="#">@User.FindFirst(System.Security.Claims.ClaimTypes.Name).ToString().Split(':')[2]</a>این محصول را ثبت کرده است</h3>
+                        </div>
+                    </li>
+                    <!-- END timeline item -->
+                    <!-- /.timeline-label -->
+                    <!-- timeline item -->
+                    <li>
+                        <i class="fa fa-envelope bg-blue"></i>
+
+                        <div class="timeline-item">
+
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">@ViewData["title"]</h3>
+                                </div>
+
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="box-body">
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="ProductName" class="control-label"></label>
+                                        <input type="text" asp-for="ProductName" class="form-control" disabled />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="GroupProduct.GroupName" class="control-label">نام گروه</label>
+                                        <select asp-for="GroupProduct.GroupName" class="form-control" disabled>
+                                            <option>
+                                                @Model.GroupProduct.GroupName
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">نام فروشنده</label>
+                                        <input type="text" asp-for="Admin.FullName" class="form-control" disabled />
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label asp-for="Description" class="control-label"></label>
+                                            <label type="text" class="form-control" style="min-height:200px" disabled>@Html.Raw(Model.Description)</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="Off" class="control-label"></label>
+                                        <input type="text" asp-for="Off" class="form-control" disabled />
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="ShortDescription" class="control-label"></label>
+                                        <input type="text" asp-for="ShortDescription" class="form-control" disabled />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="Company" class="control-label"></label>
+                                        <input type="text" asp-for="Company.CompanyName" class="form-control" disabled />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="Slug" class="control-label"></label>
+                                        <input type="text" asp-for="Slug" class="form-control" disabled />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="MetaTag" class="control-label"></label>
+                                        <input type="text" asp-for="MetaTag" class="form-control" disabled />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="MetaDescription" class="control-label"></label>
+                                        <input type="text" asp-for="MetaDescription" class="form-control" disabled />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="Visit" class="control-label"></label>
+                                        <input type="text" asp-for="Visit" class="form-control" disabled />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">رنگها</label>
+                                        <table class="table table-bordered table-dark">
+                                            <thead>
+                                                <tr>
+                                                    <th asp-for="Color" class="control-label">رنگ</th>
+                                                    <th asp-for="Quantity" class="control-label">تعداد</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.ProductColors)
+                                                {
+                                                    <tr>
+                                                        <td><input value="@item.ColorCode" type="color" class="form-group" disabled></td>
+                                                        <td><input value="@item.Quantity" type="number" class="form-group col-md-11" disabled></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="form-group col-md-4 form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="ShowInSlider" disabled /> @Html.DisplayNameFor(model => model.ShowInSlider)
+                                        </label>
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="IsApprove" disabled /> @Html.DisplayNameFor(model => model.IsApprove)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <!-- END timeline item -->
+                    <!-- timeline item -->
+                    <li>
+                        <i class="fa fa-camera bg-purple"></i>
+                        <div class="timeline-item">
+                            <div class="form-group ">
+                                <label asp-for="SliderPicture" for="exampleInputFile">تصویر اسلایدر</label>
+                                <div id="wrapper" style="margin-top: 20px;">
+                                    <img class="margin" style="max-width: 40%" src="@FileRoots.ReadProductphotoRoot@Model.SliderPicture" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- END timeline item -->
+                    <!-- timeline item -->
+                    <li>
+                        <i class="fa fa-camera bg-gray"></i>
+                        <div class="timeline-item">
+                            <div class="form-group ">
+                                <label asp-for="ProductPhotos" >تصاویر محصول</label>
+                                <div id="wrapper" style="margin-top: 20px;">
+                                    @foreach (var item in Model.ProductPhotos)
+                                    {
+                                        <img class="margin" style="max-width: 150px; max-height: 100px" src="@FileRoots.ReadProductphotoRoot@item.PhotoName" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="timeline-body ">
+                                <div id="multi-image-holder"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- END timeline item -->
+                    <li>
+                        <div class="timeline-item">
+                            <div style="text-align:center" class="box-footer">
+                                <a large" class="btn btn-warning" style="font-size:large" asp-action="Edit" asp-route-id="@Model.Id">ویرایش</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a style="font-size:large" class="btn btn-primary" asp-action="Index">بازگشت</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-clock-o bg-gray"></i>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>

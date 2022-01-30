@@ -1,0 +1,178 @@
+﻿@model DataLayer.Entities.Product
+
+@{
+    ViewData["Title"] = "عملیات حـذف";
+    @using CoreLayer.IServices;
+    @using CoreLayer.Utilities
+    @inject IGroupProductService groupservice;
+    @inject IUserService userservice;
+}
+<section class="content">
+
+    <!-- row -->
+    <div class="row">
+
+        <div class="col-md-12">
+            <!-- The time line -->
+
+            <ul class="timeline">
+                <li class="time-label">
+                    <span class="bg-green">
+                        @Model.CreationDate.ToShamsi()
+                    </span>
+                </li>
+                <!-- timeline item -->
+                <li>
+                    <i class="fa fa-user bg-aqua"></i>
+                    <div class="timeline-item">
+                        <h3 class="timeline-header no-border"><a href="#"> @Model.Admin.FullName </a>این محصول را ثبت کرده است</h3>
+                    </div>
+                </li>
+                <!-- END timeline item -->
+                <!-- /.timeline-label -->
+                <!-- timeline item -->
+                <li>
+                    <i class="fa fa-envelope bg-blue"></i>
+
+                    <div class="timeline-item">
+
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">@ViewData["title"]</h3>
+                            </div>
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="box-body">
+                                <div class="form-group col-md-4">
+                                    <label asp-for="ProductName" class="control-label"></label>
+                                    <input type="text" asp-for="ProductName" class="form-control" disabled />
+                                    <span asp-validation-for="ProductName" class="text-xl-right text-red"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="Groupid" class="control-label"></label>
+                                    <select asp-for="Groupid" class="form-control" asp-items="ViewBag.Groupid" disabled>
+                                        <option>
+                                            @groupservice.GetGroupByID(Model.Groupid).GroupName
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label">نام فروشنده</label>
+                                    <input type="text" asp-for="Admin.FullName" class="form-control" disabled />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="Description" class="control-label"></label>
+                                    <input type="text" asp-for="Description" class="form-control" disabled />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="ProductPrice.Price" class="control-label"></label>
+                                    <input type="text" asp-for="ProductPrice.Price" class="form-control" disabled />
+
+                                </div>
+                                @*<div class="form-group col-md-4">
+                                    <label asp-for="EntitiesInStokepile" class="control-label"></label>
+                                    <input type="text" asp-for="EntitiesInStokepile" class="form-control" disabled />
+                                </div>*@
+                                <div class="form-group col-md-4">
+                                    <label asp-for="Off" class="control-label"></label>
+                                    <input type="text" asp-for="Off" class="form-control" disabled />
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label asp-for="ShortDescription" class="control-label"></label>
+                                    <input type="text" asp-for="ShortDescription" class="form-control" disabled />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="Company" class="control-label"></label>
+                                    <input type="text" asp-for="Company" class="form-control" disabled />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="Slug" class="control-label"></label>
+                                    <input type="text" asp-for="Slug" class="form-control" disabled />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="MetaTag" class="control-label"></label>
+                                    <input type="text" asp-for="MetaTag" class="form-control" disabled />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="MetaDescription" class="control-label"></label>
+                                    <input type="text" asp-for="MetaDescription" class="form-control" disabled />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="Visit" class="control-label"></label>
+                                    <input type="text" asp-for="Visit" class="form-control" disabled />
+                                </div>
+                                <div class="form-group col-md-4 form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" asp-for="ShowInSlider" disabled /> @Html.DisplayNameFor(model => model.ShowInSlider)
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="ProductColors" class="control-label"></label>
+                                    @foreach (var color in Model.ProductColors)
+                                    {
+                                        <input type="color" value="@color.ColorCode" class="form-group" disabled />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+                <!-- END timeline item -->
+                <!-- timeline item -->
+                <li>
+                    <i class="fa fa-camera bg-purple"></i>
+                    <div class="timeline-item">
+                        <div class="form-group ">
+                            <label asp-for="SliderPicture" for="exampleInputFile">تصویر اسلایدر</label>
+                            <div id="wrapper" style="margin-top: 20px;">
+                                <img class="margin" style="max-width: 40%" src="@FileRoots.ReadProductphotoRoot@Model.SliderPicture" />
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!-- END timeline item -->
+                <!-- timeline item -->
+                <li>
+                    <i class="fa fa-camera bg-gray"></i>
+                    <div class="timeline-item">
+                        <div class="form-group ">
+                            <label asp-for="ProductPhotos" for="exampleInputFile">تصاویر محصول</label>
+                            <div id="wrapper" style="margin-top: 20px;">
+                                @foreach (var item in Model.ProductPhotos)
+                                {
+                                    <img class="margin" style="max-width: 150px; max-height: 100px" src="@FileRoots.ReadProductphotoRoot@item.PhotoName" />
+                                }
+                            </div>
+                        </div>
+                        <div class="timeline-body ">
+                            <div id="multi-image-holder"></div>
+                        </div>
+                    </div>
+                </li>
+                <!-- END timeline item -->
+                <li>
+                    <div class="timeline-item">
+                        <div style="text-align:center" class="box-footer">
+                            <form asp-action="Delete">
+                                <input type="hidden" asp-for="Id" />
+                                <button large" class="btn btn-danger" value="Delete" style="font-size:x-large" type="submit">حــذف</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a style="font-size:large" class="btn btn-primary" asp-action="Index">بازگشت</a>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <i class="fa fa-clock-o bg-gray"></i>
+                </li>
+
+            </ul>
+
+        </div>
+        <!-- /.col -->
+
+    </div>
+    <!-- /.row -->
+
+</section>

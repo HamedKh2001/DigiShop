@@ -1,0 +1,269 @@
+﻿@model CoreLayer.DTOs.EditProductDto
+@{
+    ViewData["Title"] = " ویـرایـش پـست";
+    @using CoreLayer.Utilities;
+}
+
+<section class="content">
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-area="Admin" asp-controller="Products" asp-action="Edit" enctype="multipart/form-data">
+                <!-- The time line -->
+                <ul class="timeline">
+                    <!-- timeline item -->
+                    <li>
+                        <i class="fa fa-user bg-aqua"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header no-border"><a href="#">@User.GetUserName()</a> درحال <i class="text-warning">ویرایش</i> محصول هستید!!!</h3>
+                        </div>
+                    </li>
+                    <!-- END timeline item -->
+                    <!-- /.timeline-label -->
+                    <!-- timeline item -->
+                    <li>
+                        <i class="fa fa-envelope bg-blue"></i>
+
+                        <div class="timeline-item">
+
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">@ViewData["title"]</h3>
+                                </div>
+
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="box-body">
+
+
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">گروه</label>
+                                        <select asp-for="Group.Id" class="form-control" asp-items="ViewBag.Groupid"></select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="ProductName" class="control-label"></label>
+                                        <input asp-for="ProductName" class="form-control" />
+                                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                                    </div>
+                                    
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="Price" class="control-label"></label>
+                                        <input asp-for="Price" class="form-control" />
+                                        <span asp-validation-for="Price" class="text-danger"></span>
+                                    </div>
+                                    @*<div class="form-group col-md-4">
+                                            <label asp-for="Color" class="control-label"></label>
+                                            <input asp-for="Color" class="form-control" />
+                                            <span asp-validation-for="Color" class="text-danger"></span>
+                                        </div>*@
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="Off" class="control-label"></label>
+                                        <input asp-for="Off" class="form-control" />
+                                        <span asp-validation-for="Off" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="ShortDescription" class="control-label"></label>
+                                        <input asp-for="ShortDescription" class="form-control" />
+                                        <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">کمپانی</label>
+                                        <input asp-for="Company.Id " class="form-control" />
+                                        <span asp-validation-for="Company" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="Slug" class="control-label"></label>
+                                        <input asp-for="Slug" class="form-control" />
+                                        <span asp-validation-for="Slug" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="MetaTag" class="control-label"></label>
+                                        <input asp-for="MetaTag" class="form-control" />
+                                        <span asp-validation-for="MetaTag" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label asp-for="MetaDescription" class="control-label"></label>
+                                        <input asp-for="MetaDescription" class="form-control" />
+                                        <span asp-validation-for="MetaDescription" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-md-4 form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="ShowInSlider" /> @Html.DisplayNameFor(model => model.ShowInSlider)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <div class="form-group col-md-12">
+                                        <label asp-for="Description" class="control-label"></label>
+                                        <textarea asp-for="Description" id="Ckeditor" class="form-control"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <!-- END timeline item -->
+                    <!-- timeline item -->
+                    <li>
+                        <i class="fa fa-camera bg-purple"></i>
+
+                        <div class="timeline-item">
+                            <div class="form-group ">
+                                <label asp-for="SliderPicture" for="exampleInputFile"></label>
+                                <div id="wrapper" style="margin-top: 20px;">
+                                    <input asp-for="SliderPicture" type="file" id="SliderPicture" />
+                                </div>
+
+                                @if (Model.SliderPicture != null)
+                                {
+                                    <div class="timeline-body">
+                                        <img id="Slider_holder" class="margin" style="max-width: 40%" src="@FileRoots.ReadProductphotoRoot@Model.SliderPicture.FileName" />
+                                        <div id="image-holder"></div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </li>
+                    <!-- END timeline item -->
+                    <!-- timeline item -->
+                    <li>
+                        <i class="fa fa-camera bg-gray"></i>
+                        <div class="timeline-item">
+                            <div class="form-group">
+                                <label asp-for="SliderPicture" for="exampleInputFile">تصاویر محصول</label>
+                                <div id="wrapper" style="margin-top: 20px;">
+                                    <input asp-for="SliderPicture" type="file" id="ProductPhotos" multiple />
+                                </div>
+                            </div>
+
+                            @if (Model.ProductPhotoFiles.Count > 0)
+                            {
+                                <div class="timeline-body ">
+                                    @foreach (var item in Model.ProductPhotoFiles)
+                                    {
+                                        <img class="margin" style="max-width: 150px; max-height: 100px" src="@FileRoots.ReadProductphotoRoot@item.FileName" />
+                                        <span onclick="delbtn(@item.FileName))" class="btn-danger btn-sm"><i class="fa fa-trash"></i></span>
+                                    }
+                                    <div id="multi-image-holder"></div>
+                                </div>
+                            }
+                        </div>
+                    </li>
+                    <!-- END timeline item -->
+                    <li>
+                        <div class="timeline-item">
+                            <div style=" text-align: center" class="box-footer">
+                                <button type="submit" class="btn btn-success btn-lg" style="min-width:40%">ثــبــت</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-clock-o bg-gray"></i>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $("#delbtn").click(function (name) {
+            console.log("11");
+            $.ajax({
+                type: "Get",
+                url: "/Admin/Products/DeletePhoto",
+                data: "name=" + name
+            }).done(function (res) {
+                console.log(res);
+            });
+        });
+        $("#SliderPicture").change(function (e) {
+            $("#Slider_holder").remove();
+        });
+        $(document).ready(function () {
+            $("#SliderPicture").on('change', function () {
+                //Get count of selected files
+                var countFiles = $(this)[0].files.length;
+                var imgPath = $(this)[0].value;
+                var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+                var image_holder = $("#image-holder");
+                image_holder.empty();
+                if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                    if (typeof (FileReader) != "undefined") {
+                        //loop for each file selected for uploaded.
+                        for (var i = 0; i < countFiles; i++) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                $("<img />", {
+                                    "src": e.target.result,
+                                    "style": "max-width:40%",
+                                    "class": "margin"
+                                }).appendTo(image_holder);
+                            }
+                            image_holder.show();
+                            reader.readAsDataURL($(this)[0].files[i]);
+                        }
+                    } else {
+                        alert("This browser does not support FileReader.");
+                    }
+                } else {
+                    alert("Pls select only images");
+                }
+            });
+            $("#ProductPhotos").on('change', function () {
+                //Get count of selected files
+                var countFiles = $(this)[0].files.length;
+                var imgPath = $(this)[0].value;
+                var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+                var image_holder = $("#multi-image-holder");
+                image_holder.empty();
+                if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                    if (typeof (FileReader) != "undefined") {
+                        //loop for each file selected for uploaded.
+                        for (var i = 0; i < countFiles; i++) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                $("<img >", {
+                                    "src": e.target.result,
+                                    "style": "max-width:150px;max-height:100px",
+                                    "class": "margin"
+                                }).appendTo(image_holder);
+                            }
+                            image_holder.show();
+                            reader.readAsDataURL($(this)[0].files[i]);
+                        }
+                    } else {
+                        alert("This browser does not support FileReader.");
+                    }
+                } else {
+                    alert("Pls select only images");
+                }
+            });
+        });
+    </script>
+}
+<script>
+    //function createbtn(name) {
+    //    console.log(name);
+    //    $.ajax({
+    //        type: "Get",
+    //        url: "/Admin/Products/" + name
+    //    }).done(function (res) {
+    //        console.log(res);
+    //    });
+    //};
+    $("#delbtn").click(function (name) {
+        console.log("22");
+        $.ajax({
+            type: "Get",
+            url: "/Admin/Products/DeletePhoto/" + name
+        }).done(function (res) {
+            console.log(res);
+        });
+    });
+</script>

@@ -1,0 +1,61 @@
+﻿@model List<CoreLayer.DTOs.UserDto>
+@{
+    int index = 1;
+    @using DataLayer.Entities
+}
+
+<div class="box box-primary">
+    <div style="text-align:center" class="col col-md-12">
+        <h1 class="text-info"><i class="fa fa-group">&nbsp;اعضای سایت</i></h1>
+        <br />
+    </div>
+    <div class="box-body">
+        <table class="table table-bordered table-striped dataTable">
+            <thead>
+                <tr>
+                    <th class="sorting col-md-1">
+                        #
+                    </th>
+                    <th class="sorting col-md-5">
+                        نام
+                    </th>
+                    <th class="sorting col-md-3">
+                        نقش
+                    </th>
+                    <th class="sorting col-md-3">
+                        آخرین بازدید
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@index</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @if (item.RoleName == DataLayer.Entities.User.UserRole.Admin)
+                            {
+                                <p>ادمین</p>
+                            }
+                            @if (item.RoleName == DataLayer.Entities.User.UserRole.Customer)
+                            {
+                                <p>مشتری</p>
+                            }
+                            @if (item.RoleName == DataLayer.Entities.User.UserRole.shop)
+                            {
+                                <p>فروشگاه</p>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RoleName)
+                        </td>
+                    </tr>
+                    index++;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

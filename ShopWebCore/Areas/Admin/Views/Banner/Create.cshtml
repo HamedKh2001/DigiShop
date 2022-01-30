@@ -1,0 +1,127 @@
+﻿@model CoreLayer.DTOs.BannerDto
+@{
+    ViewData["Title"] = "افـزودن تبلیغات جـدیـد";
+    @using CoreLayer.Utilities;
+    @using DataLayer.Entities
+}
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-area="Admin" asp-controller="Banner" asp-action="Create" enctype="multipart/form-data">
+                <ul class="timeline">
+                    <li>
+                        <i class="fa fa-user bg-aqua"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header no-border"><a href="#">@User.GetUserName()</a> درحال اضافه کردن تبلیغ جدید هستید!!!</h3>
+                        </div>
+                    </li>
+
+                    <li>
+                        <i class="fa fa-envelope bg-blue"></i>
+                        <div class="timeline-item">
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">@ViewData["title"]</h3>
+                                </div>
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label asp-for="ItemName" class="control-label"></label>
+                                            <input asp-for="ItemName" class="form-control" />
+                                            <span asp-validation-for="ItemName" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label asp-for="TypeOfAdvertise" class="control-label"></label>
+                                            <select asp-for="TypeOfAdvertise" class="form-control select2 select2-hidden-accessible" asp-items="ViewBag.ADsTypes"></select>
+                                            @*@Html.DropDownList("EnumDropDown", ViewData["ADsType"] as SelectList)*@
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label asp-for="Link" class="control-label"></label>
+                                            <input asp-for="Link" class="form-control" />
+                                            <span asp-validation-for="Link" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label asp-for="IsDeleted" class="control-label"></label>&nbsp;
+                                            <input asp-for="IsDeleted" type="checkbox" class="form-check-input" />
+                                            <span asp-validation-for="IsDeleted" class="text-danger"></span>
+                                        </div>  
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label asp-for="Description" class="control-label"></label>
+                                            <textarea asp-for="Description" id="Ckeditor" class="form-control"></textarea>
+                                            <span asp-validation-for="Description" class="text-danger"></span>
+                                        </div>
+                                    </div>                                          
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-camera bg-purple"></i>
+                        <div class="timeline-item">
+                            <div class="form-group ">
+                                <label asp-for="PhotoName" for="PhotoName"></label>
+                                <div id="wrapper" style="margin-top: 20px;">
+                                    <input asp-for="PhotoName" type="file" id="PhotoName" />
+                                    <div id="image-holder"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-item">
+                            <div style=" text-align: center" class="box-footer">
+                                <button type="submit" class="btn btn-success btn-lg" style="min-width:40%">ثــبــت</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-clock-o bg-gray"></i>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+@section Scripts{ 
+<script>
+    $(document).ready(function () {
+        $("#PhotoName").on('change', function () {
+            //Get count of selected files
+            var countFiles = $(this)[0].files.length;
+            var imgPath = $(this)[0].value;
+            var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+            var image_holder = $("#image-holder");
+            image_holder.empty();
+            if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+                if (typeof (FileReader) != "undefined") {
+                    //loop for each file selected for uploaded.
+                    for (var i = 0; i < countFiles; i++) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $("<img />", {
+                                "src": e.target.result,
+                                "style": "max-width:40%",
+                                "class": "margin"
+                            }).appendTo(image_holder);
+                        }
+                        image_holder.show();
+                        reader.readAsDataURL($(this)[0].files[i]);
+                    }
+                } else {
+                    alert("This browser does not support FileReader.");
+                }
+            } else {
+                alert("Pls select only images");
+            }
+        });
+    });
+</script>
+}

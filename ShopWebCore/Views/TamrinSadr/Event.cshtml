@@ -1,0 +1,67 @@
+﻿
+@{
+}
+<!-- Modal -->
+<div class="modal fade" id="MyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" id="modalbody">
+
+            </div>
+            <div class="footer" id="clickdiv">
+                <a class="btn btn-secondary btn-sm pull-left" onclick="clickbtn(1)">Clickbtn</a>
+            </div>
+            <div class="footer" id="afterclickdiv">
+                <a class="btn btn-secondary btn-sm" onclick="afterclickbtn(2)">AfterClick</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="main default">
+
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+
+                <div style="text-align:center">
+                    <a class="btn btn-secondary btn-lg" onclick="Sadrbtn()">Soroosh Sadr</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
+
+<script>
+    function Sadrbtn() {
+        
+        Swal.fire({
+            title: 'Before Click',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'ادامه',
+            denyButtonText: `لغو`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "Get",
+                    url: "/TamrinSadr/AfterClick"
+                }).done(function (res) {
+                    Swal.fire(res)
+                });
+            } else if (result.isDenied) {
+                
+                Swal.fire('لغو شد', '', 'info')
+            }
+        })
+    }
+</script>

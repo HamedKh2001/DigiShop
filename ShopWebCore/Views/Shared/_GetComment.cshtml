@@ -1,0 +1,32 @@
+﻿@model List<DataLayer.Entities.Productcomment>
+@{
+    @using CoreLayer.Utilities
+}
+<h2 class="param-title">
+    نظرات کاربران
+    <span>@Model.Count نظر</span>
+</h2>
+<div class="comments-area default">
+    <ol class="comment-list">
+        <!-- #comment-## -->
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class="comment-body">
+                    <div class="comment-author">
+                        <img alt="" src="/assets/img/default-avatar.png" class="avatar"><cite class="fn">@item.User.FullName</cite>
+                        <span class="says">گفت:</span>
+                    </div>
+
+                    <div class="commentmetadata">
+                        <a href="#">
+                            @item.CreationDate.ToShamsi()   @item.CreationDate.ToShortTimeString()
+                        </a>
+                    </div>
+                    <p>@item.Comment</p>
+                </div>
+            </li>
+
+        }
+    </ol>
+</div>

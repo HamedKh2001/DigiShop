@@ -1,0 +1,50 @@
+﻿@model Areas.Admin.Models.GroupProduct.CreateGroupProductViewModel
+@{
+    ViewData["title"] = "افزودن دسته بندی جدید";
+}
+
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">@ViewData["title"]</h3>
+            </div>
+            <form role="form" method="post" asp-area="Admin" asp-controller="GroupProduct" asp-action="Create" enctype="multipart/form-data">
+                <div class="box-body">
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="GroupName"></label>
+                        <input asp-for="GroupName" class="form-control" />
+                        <span asp-validation-for="GroupName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="Slug"></label>
+                        <input asp-for="Slug" class="form-control" />
+                        <span asp-validation-for="Slug" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="MetaTag"></label>
+                        <input asp-for="MetaTag" class="form-control" />
+                        <span asp-validation-for="MetaTag" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="MetaDescription"></label>
+                        <input asp-for="MetaDescription" class="form-control" />
+                        <span asp-validation-for="MetaDescription" class="text-danger"></span>
+                    </div>
+                    @if (Model.SuperParentID == null&&Model.ParentID!=0)
+                    {
+                        <div class="form-group col-md-6">
+                            <label asp-for="GroupProductPhoto"></label>
+                            <input asp-for="GroupProductPhoto" class="form-control" />
+                            <span asp-validation-for="GroupProductPhoto" class="text-danger"></span>
+                        </div>
+                    }
+
+                </div>
+                <div style="position:center" class="box-footer">
+                    <button type="submit" class="btn btn-success btn-lg" style="min-width:150px">ثــبــت</button>
+                </div>
+            </form>
+        </div>

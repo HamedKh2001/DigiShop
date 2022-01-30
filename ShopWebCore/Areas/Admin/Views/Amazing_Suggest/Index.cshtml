@@ -1,0 +1,91 @@
+﻿@model List<DataLayer.Entities.Amazing_Suggest>
+@inject CoreLayer.IServices.IProductService _ProductService
+@{
+    int index = 1;
+
+}
+
+<div class="row">
+    <div class="col-xs-12 col-md-12 col-lg-12">
+        <div class="box">
+            <div class="box-header">
+                <h2 class="box-title">گروه ها</h2>
+                <div class="col col-md-12">
+                    <div style="text-align:center">
+                        <a href="/admin/Amazing_Suggest/Create" class="btn btn-success btn-lg " style="width:40%"><i class="fa fa-plus">&nbsp;افزودن پیشنهاد جدید</i></a>
+                    </div>
+                </div>
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control pull-right" placeholder="جستجو">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <th>شماره</th>
+                            <th>نام محصول</th>
+                            <th>تاریخ ثبت</th>
+                            <th>تاریخ انقضا</th>
+                            <th>فعال</th>
+                            <th>عملیات</th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@index</td>
+                                <td>@_ProductService.GetProductByID(item.ProductId).Result.ProductName</td>
+                                <td>@item.CreationDate</td>
+                                <td>@item.ExpireDate</td>
+                                <td><input @((item.IsActive)?"checked":"") type="checkbox" disabled/></td>
+
+                            <td style="font-size:x-large">
+
+                                <a onclick="Deletebtnn(@item.Id)" class="label label-danger"><i class="fa fa-trash-o"></i></a>
+                                    <a href="/admin/Amazing_Suggest/Edit/@item.Id" class="label label-warning"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                            index++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function Deletebtnn(e) {
+            console.log(e);
+            $.ajax({
+                type: "Get",
+                url: "/admin/Amazing_Suggest/Delete/"+e,
+            }).done(function (res) {
+                if (res ===200) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'موفق',
+                        text: "عملیات موفقیت آمیز بود",
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'ناموفق',
+                        text: "خطا",
+                    })
+                }
+            });
+        };
+    </script>
+}

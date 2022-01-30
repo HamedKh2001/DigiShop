@@ -1,0 +1,52 @@
+﻿@page "{handler?}"
+@model ShopWebCore.Pages.Auth.ActivationModel
+@{
+}
+
+<div method="post" class="main-content col-12 col-md-7 col-lg-5 mx-auto">
+    <div class="account-box">
+        <a href="/" class="logo">
+            <img src="/assets/img/logo.png" alt="">
+        </a>
+        <div class="account-box-title text-right">پیامکی حاوی کد فعالسازی برایتان ارسال شد</div>
+        <div class="account-box-content">
+            <form method="post" class="form-account">
+                <div class="form-account-row">
+                    <label class="input-label"></label>
+                    <input asp-for="EnteredCode" type="text" class="input-field" placeholder="کـد ارسـال شده را وارد کـنـیـد">
+                    <span asp-validation-for="EnteredCode" style="color: red"></span>
+                </div>
+                <div class="form-account-row">
+                    <button type="button" id="SendMessage" onclick="SendMessage()" class="btn btn-success">ارسال مجدد</button>
+                </div>
+                <div class="form-account-row form-account-submit">
+                    <div class="parent-btn">
+                        <button type="submit" class="dk-btn dk-btn-info">
+                            ثــبـــت
+                            <i class="fa fa-sign-in"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $('#SendMessage').click(function () {
+            var num = location.href.split('/')[5];
+            $.ajax({
+                type: "Get",
+                url: "/auth/activation/ReSendSMS",
+                data: "PhoneNumber=" + num,
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'نـامـوفـق',
+                        text: response,
+                    })
+                }
+            });
+        });
+    </script>
+}

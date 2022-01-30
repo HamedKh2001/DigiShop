@@ -1,0 +1,24 @@
+﻿@model Task<List<DataLayer.Entities.Company>>
+@{
+
+}
+
+<div class="collapse show" id="collapseExample2">
+    <div class="ui-input ui-input--quick-search">
+        <input type="text" class="ui-input-field ui-input-field--cleanable" placeholder="نام برند مورد نظر را بنویسید…">
+        <span class="ui-input-cleaner"></span>
+    </div>
+    <div class="filter-option">
+        @for (int i = 0; i < Model.Result.Count; i++)
+        {
+            string checkbox = $"checkbox{i}";
+            <div class="checkbox">
+                <input id="@(checkbox+"_Value")" type="hidden" value="@Model.Result[i].Id"/>
+                <input id="@checkbox" type="checkbox">
+                <label for="@checkbox">
+                    @Model.Result[i].CompanyName
+                </label>
+            </div>
+        }
+    </div>
+</div>

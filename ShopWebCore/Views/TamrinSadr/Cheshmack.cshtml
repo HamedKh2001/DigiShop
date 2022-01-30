@@ -1,0 +1,34 @@
+﻿@model string
+<main class="main default">
+
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div id="clockdiv" style="text-align:center">
+                    <p class="font-weight-bolder " id="clock"></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    setInterval("settime()", 1000);
+    setInterval("Cheshmak()", 1500);
+    setInterval("SetClock()", 2000);
+    function settime() {
+        $.ajax({
+            type: "Get",
+            url: "/TamrinSadr/SetClock",
+        }).done(function (res) {
+            $("#clock").html(res);
+        });
+    }
+    function SetClock() {
+        $("#clock").hide();
+    }
+    function Cheshmak() {
+        $("#clock").show();
+    }
+</script>
